@@ -1,6 +1,6 @@
 //
-//  Split_FreeApp.swift
-//  SplitFree
+//  CoverageApp.swift
+//  Coverage
 //
 //  Created by Henrique César Gouveia on 30/11/23.
 //
@@ -9,26 +9,23 @@ import SwiftUI
 import SwiftData
 
 @main
-struct Split_FreeApp: App {
+struct CoverageApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Group.self,
-            Person.self,
-            Bill.self,
-            SplitedBill.self
+            Item.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        
+
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-    
+
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            ContentView()
         }
         .modelContainer(sharedModelContainer)
     }

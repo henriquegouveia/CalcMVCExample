@@ -1,0 +1,361 @@
+/Users/henriquegouveia/Documents/opensource/CalcMVCExample/Coverage/ContentView.swift:
+    1|       |//
+    2|       |//  ContentView.swift
+    3|       |//  Coverage
+    4|       |//
+    5|       |//  Created by Henrique César Gouveia on 30/11/23.
+    6|       |//
+    7|       |
+    8|       |import SwiftUI
+    9|       |import SwiftData
+   10|       |
+   11|       |struct ContentView: View {
+   12|       |    @Environment(\.modelContext) private var modelContext
+   13|       |    @Query private var items: [Item]
+   14|       |
+   15|     12|    var body: some View {
+   16|     12|        NavigationSplitView {
+   17|     12|            List {
+   18|     12|                ForEach(items) { item in
+   19|      0|                    NavigationLink {
+   20|      0|                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+   21|      0|                    } label: {
+   22|      0|                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+   23|      0|                    }
+   24|      0|                }
+   25|     12|                .onDelete(perform: deleteItems)
+  ------------------
+  | $s8Coverage11ContentViewV4bodyQrvg7SwiftUI0C0PAEE7toolbar7contentQrqd__yXE_tAE07ToolbarB0Rd__lFQOyAE4ListVys5NeverOAE07DynamiccB0PAEE8onDelete7performQry10Foundation8IndexSetVcSg_tFQOyAE7ForEachVySayAA4ItemCG0E4Data20PersistentIdentifierVAE14NavigationLinkVyAE4TextVA6_GG_Qo_G_AE0iB7BuilderV10buildBlockyQrx_q_tAeJRzAeJR_r0_lFZQOy_AE0iU0VyytAE10EditButtonVGA15_yytAE6ButtonVyAE5LabelVyA6_AE5ImageVGGGQo_Qo_yXEfU_A9_yXEfU_yAUcACcfu_:
+  |   25|     12|                .onDelete(perform: deleteItems)
+  ------------------
+  | Unexecuted instantiation: $s8Coverage11ContentViewV4bodyQrvg7SwiftUI0C0PAEE7toolbar7contentQrqd__yXE_tAE07ToolbarB0Rd__lFQOyAE4ListVys5NeverOAE07DynamiccB0PAEE8onDelete7performQry10Foundation8IndexSetVcSg_tFQOyAE7ForEachVySayAA4ItemCG0E4Data20PersistentIdentifierVAE14NavigationLinkVyAE4TextVA6_GG_Qo_G_AE0iB7BuilderV10buildBlockyQrx_q_tAeJRzAeJR_r0_lFZQOy_AE0iU0VyytAE10EditButtonVGA15_yytAE6ButtonVyAE5LabelVyA6_AE5ImageVGGGQo_Qo_yXEfU_A9_yXEfU_yAUcACcfu_yAUcfu0_
+  ------------------
+   26|     12|            }
+   27|     12|            .toolbar {
+   28|     12|                ToolbarItem(placement: .navigationBarTrailing) {
+   29|     12|                    EditButton()
+   30|     12|                }
+   31|     12|                ToolbarItem {
+   32|     12|                    Button(action: addItem) {
+  ------------------
+  | $s8Coverage11ContentViewV4bodyQrvg7SwiftUI0C0PAEE7toolbar7contentQrqd__yXE_tAE07ToolbarB0Rd__lFQOyAE4ListVys5NeverOAE07DynamiccB0PAEE8onDelete7performQry10Foundation8IndexSetVcSg_tFQOyAE7ForEachVySayAA4ItemCG0E4Data20PersistentIdentifierVAE14NavigationLinkVyAE4TextVA6_GG_Qo_G_AE0iB7BuilderV10buildBlockyQrx_q_tAeJRzAeJR_r0_lFZQOy_AE0iU0VyytAE10EditButtonVGA15_yytAE6ButtonVyAE5LabelVyA6_AE5ImageVGGGQo_Qo_yXEfU_A28_yXEfU0_A26_yXEfU0_yycACcfu_:
+  |   32|     12|                    Button(action: addItem) {
+  ------------------
+  | Unexecuted instantiation: $s8Coverage11ContentViewV4bodyQrvg7SwiftUI0C0PAEE7toolbar7contentQrqd__yXE_tAE07ToolbarB0Rd__lFQOyAE4ListVys5NeverOAE07DynamiccB0PAEE8onDelete7performQry10Foundation8IndexSetVcSg_tFQOyAE7ForEachVySayAA4ItemCG0E4Data20PersistentIdentifierVAE14NavigationLinkVyAE4TextVA6_GG_Qo_G_AE0iB7BuilderV10buildBlockyQrx_q_tAeJRzAeJR_r0_lFZQOy_AE0iU0VyytAE10EditButtonVGA15_yytAE6ButtonVyAE5LabelVyA6_AE5ImageVGGGQo_Qo_yXEfU_A28_yXEfU0_A26_yXEfU0_yycACcfu_yycfu0_
+  ------------------
+   33|     12|                        Label("Add Item", systemImage: "plus")
+   34|     12|                    }
+   35|     12|                }
+   36|     12|            }
+   37|     12|        } detail: {
+   38|     12|            Text("Select an item")
+   39|     12|        }
+   40|     12|    }
+   41|       |
+   42|      0|    private func addItem() {
+   43|      0|        withAnimation {
+   44|      0|            let newItem = Item(timestamp: Date())
+   45|      0|            modelContext.insert(newItem)
+   46|      0|        }
+   47|      0|    }
+   48|       |
+   49|      0|    private func deleteItems(offsets: IndexSet) {
+   50|      0|        withAnimation {
+   51|      0|            for index in offsets {
+   52|      0|                modelContext.delete(items[index])
+   53|      0|            }
+   54|      0|        }
+   55|      0|    }
+   56|       |}
+   57|       |
+   58|       |#Preview {
+   59|       |    ContentView()
+   60|       |        .modelContainer(for: Item.self, inMemory: true)
+   61|       |}
+
+/Users/henriquegouveia/Documents/opensource/CalcMVCExample/Coverage/CoverageApp.swift:
+    1|       |//
+    2|       |//  CoverageApp.swift
+    3|       |//  Coverage
+    4|       |//
+    5|       |//  Created by Henrique César Gouveia on 30/11/23.
+    6|       |//
+    7|       |
+    8|       |import SwiftUI
+    9|       |import SwiftData
+   10|       |
+   11|       |@main
+   12|       |struct CoverageApp: App {
+   13|     12|    var sharedModelContainer: ModelContainer = {
+   14|     12|        let schema = Schema([
+   15|     12|            Item.self,
+   16|     12|        ])
+   17|     12|        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+   18|     12|
+   19|     12|        do {
+   20|     12|            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+   21|     12|        } catch {
+   22|      0|            fatalError("Could not create ModelContainer: \(error)")
+   23|      0|        }
+   24|     12|    }()
+  ------------------
+  | $s8Coverage0A3AppV20sharedModelContainer9SwiftData0dE0Cvpfi:
+  |   13|     12|    var sharedModelContainer: ModelContainer = {
+  |   14|     12|        let schema = Schema([
+  |   15|     12|            Item.self,
+  |   16|     12|        ])
+  |   17|     12|        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+  |   18|     12|
+  |   19|     12|        do {
+  |   20|     12|            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+  |   21|     12|        } catch {
+  |   22|     12|            fatalError("Could not create ModelContainer: \(error)")
+  |   23|     12|        }
+  |   24|     12|    }()
+  ------------------
+  | $s8Coverage0A3AppV20sharedModelContainer9SwiftData0dE0CvpfiAGyXEfU_:
+  |   13|     12|    var sharedModelContainer: ModelContainer = {
+  |   14|     12|        let schema = Schema([
+  |   15|     12|            Item.self,
+  |   16|     12|        ])
+  |   17|     12|        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+  |   18|     12|
+  |   19|     12|        do {
+  |   20|     12|            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+  |   21|     12|        } catch {
+  |   22|      0|            fatalError("Could not create ModelContainer: \(error)")
+  |   23|      0|        }
+  |   24|     12|    }()
+  ------------------
+   25|       |
+   26|     12|    var body: some Scene {
+   27|     12|        WindowGroup {
+   28|     12|            ContentView()
+   29|     12|        }
+   30|     12|        .modelContainer(sharedModelContainer)
+   31|     12|    }
+   32|       |}
+
+/Users/henriquegouveia/Documents/opensource/CalcMVCExample/Coverage/Item.swift:
+    1|       |//
+    2|       |//  Item.swift
+    3|       |//  Coverage
+    4|       |//
+    5|       |//  Created by Henrique César Gouveia on 30/11/23.
+    6|       |//
+    7|       |
+    8|       |import Foundation
+    9|       |import SwiftData
+   10|       |
+   11|       |@Model
+   12|       |final class Item {
+   13|       |    var timestamp: Date
+   14|       |    
+   15|      0|    init(timestamp: Date) {
+   16|      0|        self.timestamp = timestamp
+   17|      0|    }
+   18|       |}
+
+/Users/henriquegouveia/Library/Developer/Xcode/DerivedData/Coverage-hkyxggjltmtzdvbrsikbbplvdwti/Build/Intermediates.noindex/Coverage.build/Debug-iphonesimulator/Coverage.build/DerivedSources/GeneratedAssetSymbols.swift:
+    1|       |import Foundation
+    2|       |#if canImport(AppKit)
+    3|       |import AppKit
+    4|       |#endif
+    5|       |#if canImport(UIKit)
+    6|       |import UIKit
+    7|       |#endif
+    8|       |#if canImport(SwiftUI)
+    9|       |import SwiftUI
+   10|       |#endif
+   11|       |#if canImport(DeveloperToolsSupport)
+   12|       |import DeveloperToolsSupport
+   13|       |#endif
+   14|       |
+   15|       |#if SWIFT_PACKAGE
+   16|       |private let resourceBundle = Foundation.Bundle.module
+   17|       |#else
+   18|       |private class ResourceBundleClass {}
+   19|       |private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
+   20|       |#endif
+   21|       |
+   22|       |// MARK: - Color Symbols -
+   23|       |
+   24|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+   25|       |extension DeveloperToolsSupport.ColorResource {
+   26|       |
+   27|       |}
+   28|       |
+   29|       |// MARK: - Image Symbols -
+   30|       |
+   31|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+   32|       |extension DeveloperToolsSupport.ImageResource {
+   33|       |
+   34|       |}
+   35|       |
+   36|       |// MARK: - Color Symbol Extensions -
+   37|       |
+   38|       |#if canImport(AppKit)
+   39|       |@available(macOS 14.0, *)
+   40|       |@available(macCatalyst, unavailable)
+   41|       |extension AppKit.NSColor {
+   42|       |
+   43|       |}
+   44|       |#endif
+   45|       |
+   46|       |#if canImport(UIKit)
+   47|       |@available(iOS 17.0, tvOS 17.0, *)
+   48|       |@available(watchOS, unavailable)
+   49|       |extension UIKit.UIColor {
+   50|       |
+   51|       |}
+   52|       |#endif
+   53|       |
+   54|       |#if canImport(SwiftUI)
+   55|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+   56|       |extension SwiftUI.Color {
+   57|       |
+   58|       |}
+   59|       |
+   60|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+   61|       |extension SwiftUI.ShapeStyle where Self == SwiftUI.Color {
+   62|       |
+   63|       |}
+   64|       |#endif
+   65|       |
+   66|       |// MARK: - Image Symbol Extensions -
+   67|       |
+   68|       |#if canImport(AppKit)
+   69|       |@available(macOS 14.0, *)
+   70|       |@available(macCatalyst, unavailable)
+   71|       |extension AppKit.NSImage {
+   72|       |
+   73|       |}
+   74|       |#endif
+   75|       |
+   76|       |#if canImport(UIKit)
+   77|       |@available(iOS 17.0, tvOS 17.0, *)
+   78|       |@available(watchOS, unavailable)
+   79|       |extension UIKit.UIImage {
+   80|       |
+   81|       |}
+   82|       |#endif
+   83|       |
+   84|       |// MARK: - Thinnable Asset Support -
+   85|       |
+   86|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+   87|       |@available(watchOS, unavailable)
+   88|       |extension DeveloperToolsSupport.ColorResource {
+   89|       |
+   90|      0|    private init?(thinnableName: String, bundle: Bundle) {
+   91|      0|#if canImport(AppKit) && os(macOS)
+   92|      0|        if AppKit.NSColor(named: NSColor.Name(thinnableName), bundle: bundle) != nil {
+   93|      0|            self.init(name: thinnableName, bundle: bundle)
+   94|      0|        } else {
+   95|      0|            return nil
+   96|      0|        }
+   97|      0|#elseif canImport(UIKit) && !os(watchOS)
+   98|      0|        if UIKit.UIColor(named: thinnableName, in: bundle, compatibleWith: nil) != nil {
+   99|      0|            self.init(name: thinnableName, bundle: bundle)
+  100|      0|        } else {
+  101|      0|            return nil
+  102|      0|        }
+  103|      0|#else
+  104|      0|        return nil
+  105|      0|#endif
+  106|      0|    }
+  107|       |
+  108|       |}
+  109|       |
+  110|       |#if canImport(UIKit)
+  111|       |@available(iOS 17.0, tvOS 17.0, *)
+  112|       |@available(watchOS, unavailable)
+  113|       |extension UIKit.UIColor {
+  114|       |
+  115|      0|    private convenience init?(thinnableResource: DeveloperToolsSupport.ColorResource?) {
+  116|      0|#if !os(watchOS)
+  117|      0|        if let resource = thinnableResource {
+  118|      0|            self.init(resource: resource)
+  119|      0|        } else {
+  120|      0|            return nil
+  121|      0|        }
+  122|      0|#else
+  123|      0|        return nil
+  124|      0|#endif
+  125|      0|    }
+  126|       |
+  127|       |}
+  128|       |#endif
+  129|       |
+  130|       |#if canImport(SwiftUI)
+  131|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+  132|       |extension SwiftUI.Color {
+  133|       |
+  134|      0|    private init?(thinnableResource: DeveloperToolsSupport.ColorResource?) {
+  135|      0|        if let resource = thinnableResource {
+  136|      0|            self.init(resource)
+  137|      0|        } else {
+  138|      0|            return nil
+  139|      0|        }
+  140|      0|    }
+  141|       |
+  142|       |}
+  143|       |
+  144|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+  145|       |extension SwiftUI.ShapeStyle where Self == SwiftUI.Color {
+  146|       |
+  147|      0|    private init?(thinnableResource: DeveloperToolsSupport.ColorResource?) {
+  148|      0|        if let resource = thinnableResource {
+  149|      0|            self.init(resource)
+  150|      0|        } else {
+  151|      0|            return nil
+  152|      0|        }
+  153|      0|    }
+  154|       |
+  155|       |}
+  156|       |#endif
+  157|       |
+  158|       |@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+  159|       |@available(watchOS, unavailable)
+  160|       |extension DeveloperToolsSupport.ImageResource {
+  161|       |
+  162|      0|    private init?(thinnableName: String, bundle: Bundle) {
+  163|      0|#if canImport(AppKit) && os(macOS)
+  164|      0|        if bundle.image(forResource: NSImage.Name(thinnableName)) != nil {
+  165|      0|            self.init(name: thinnableName, bundle: bundle)
+  166|      0|        } else {
+  167|      0|            return nil
+  168|      0|        }
+  169|      0|#elseif canImport(UIKit) && !os(watchOS)
+  170|      0|        if UIKit.UIImage(named: thinnableName, in: bundle, compatibleWith: nil) != nil {
+  171|      0|            self.init(name: thinnableName, bundle: bundle)
+  172|      0|        } else {
+  173|      0|            return nil
+  174|      0|        }
+  175|      0|#else
+  176|      0|        return nil
+  177|      0|#endif
+  178|      0|    }
+  179|       |
+  180|       |}
+  181|       |
+  182|       |#if canImport(UIKit)
+  183|       |@available(iOS 17.0, tvOS 17.0, *)
+  184|       |@available(watchOS, unavailable)
+  185|       |extension UIKit.UIImage {
+  186|       |
+  187|      0|    private convenience init?(thinnableResource: DeveloperToolsSupport.ImageResource?) {
+  188|      0|#if !os(watchOS)
+  189|      0|        if let resource = thinnableResource {
+  190|      0|            self.init(resource: resource)
+  191|      0|        } else {
+  192|      0|            return nil
+  193|      0|        }
+  194|      0|#else
+  195|      0|        return nil
+  196|      0|#endif
+  197|      0|    }
+  198|       |
+  199|       |}
+  200|       |#endif
+  201|       |
+

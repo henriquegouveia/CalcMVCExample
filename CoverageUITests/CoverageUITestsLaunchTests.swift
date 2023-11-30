@@ -1,13 +1,13 @@
 //
-//  Split_FreeUITestsLaunchTests.swift
-//  SplitFreeUITests
+//  CoverageUITestsLaunchTests.swift
+//  CoverageUITests
 //
 //  Created by Henrique César Gouveia on 30/11/23.
 //
 
 import XCTest
 
-final class Split_FreeUITestsLaunchTests: XCTestCase {
+final class CoverageUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
